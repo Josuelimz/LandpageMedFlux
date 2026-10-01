@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MedFlux · Logística Farmacêutica e Importação de Medicamentos</title>
+<meta name="description" content="Importação, armazenagem refrigerada e distribuição validada de medicamentos. Catálogo por categoria, regiões de importação e cadastro de cliente." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --navy-900:#061826;
+    --navy-800:#0A2A43;
+    --navy-700:#0F3A5C;
+    --navy-600:#15507D;
+    --teal:#12B7A0;
+    --teal-soft:#6FE3D2;
+    --cyan:#2CC7E0;
+    --ink:#0C1F2E;
+    --slate:#4A5E6D;
+    --slate-soft:#8394A1;
+    --line:#E2E9EF;
+    --bg:#F5F8FA;
+    --white:#FFFFFF;
+    --radius:16px;
+    --radius-lg:22px;
+    --shadow-sm:0 1px 2px rgba(12,31,46,.06), 0 6px 18px -10px rgba(12,31,46,.18);
+    --shadow-md:0 18px 40px -22px rgba(9,32,52,.35);
+    --max:1180px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,h4{font-family:'Sora','Inter',sans-serif;line-height:1.12;letter-spacing:-.02em;color:var(--navy-900)}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 26px}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:9px;
+    font-size:.78rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--navy-600);
+  }
+  .eyebrow::before{content:"";width:26px;height:2px;background:var(--teal);border-radius:2px}
+  .section{padding:104px 0}
+  .section-head{max-width:720px;margin-bottom:56px}
+  .section-head h2{font-size:clamp(1.85rem,3.4vw,2.65rem);margin:18px 0 14px}
+  .section-head p{color:var(--slate);font-size:1.05rem}
+  .grad{background:linear-gradient(100deg,var(--teal),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex;align-items:center;gap:9px;
+    font-weight:600;font-size:.95rem;
+    padding:14px 24px;border-radius:11px;border:1px solid transparent;
+    cursor:pointer;transition:.25s ease;white-space:nowrap;
+  }
+  .btn svg{width:17px;height:17px}
+  .btn-primary{background:linear-gradient(100deg,var(--teal),var(--cyan));color:#04222a;box-shadow:0 12px 26px -12px rgba(18,183,160,.75)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 18px 34px -12px rgba(18,183,160,.85)}
+  .btn-ghost{background:transparent;color:var(--white);border-color:rgba(255,255,255,.28)}
+  .btn-ghost:hover{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.5)}
+  .btn-dark{background:var(--navy-800);color:#fff}
+  .btn-dark:hover{background:var(--navy-700);transform:translateY(-2px)}
+  .btn-outline{background:#fff;color:var(--navy-800);border-color:var(--line)}
+  .btn-outline:hover{border-color:var(--navy-600);transform:translateY(-2px)}
+
+  /* ---------- Header ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:60;
+    transition:.3s ease;
+  }
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;
+    height:74px;
+  }
+  .brand{display:flex;align-items:center;gap:11px;font-family:'Sora';font-weight:800;font-size:1.22rem;color:#fff;letter-spacing:-.03em}
+  .brand .mark{
+    width:34px;height:34px;border-radius:10px;flex:none;
+    background:linear-gradient(140deg,var(--teal),var(--cyan));
+    display:grid;place-items:center;box-shadow:0 8px 18px -8px rgba(18,183,160,.8);
+  }
+  .brand .mark svg{width:19px;height:19px}
+  .brand small{display:block;font-family:'Inter';font-weight:500;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--teal-soft);margin-top:2px}
+  nav.links{display:flex;align-items:center;gap:30px}
+  nav.links a{font-size:.88rem;font-weight:500;color:rgba(255,255,255,.82);transition:.2s}
+  nav.links a:hover{color:#fff}
+  .nav-cta{display:flex;align-items:center;gap:16px}
+  .nav-cta .btn{padding:11px 20px;font-size:.88rem}
+  .burger{display:none;background:none;border:0;cursor:pointer;padding:8px}
+  .burger span{display:block;width:22px;height:2px;background:#fff;margin:5px 0;border-radius:2px;transition:.3s}
+
+  header.solid{background:rgba(6,24,38,.86);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08)}
+  header.solid .nav{height:66px}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    background:
+      radial-gradient(1100px 620px at 78% -8%, rgba(44,199,224,.22), transparent 60%),
+      radial-gradient(900px 560px at 10% 8%, rgba(18,183,160,.18), transparent 55%),
+      linear-gradient(160deg,rgba(6,24,38,.95) 0%,rgba(10,42,67,.90) 52%,rgba(12,51,80,.93) 100%),
+      url('https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+    color:#fff;
+    padding:156px 0 108px;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;opacity:.5;pointer-events:none;
+    background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+    background-size:56px 56px;
+    -webkit-mask-image:radial-gradient(circle at 70% 20%,#000 0%,transparent 72%);
+            mask-image:radial-gradient(circle at 70% 20%,#000 0%,transparent 72%);
+  }
+  .hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1.08fr .92fr;gap:64px;align-items:center}
+  .hero .eyebrow{color:var(--teal-soft)}
+  .hero h1{color:#fff;font-size:clamp(2.2rem,4.7vw,3.65rem);margin:22px 0 22px;font-weight:800}
+  .hero p.lead{font-size:1.12rem;color:rgba(226,240,247,.86);max-width:540px;margin-bottom:34px}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:40px}
+  .hero-stats{display:flex;gap:38px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.12);padding-top:26px}
+  .hero-stats .st b{display:block;font-family:'Sora';font-size:1.5rem;font-weight:700;color:#fff}
+  .hero-stats .st span{font-size:.82rem;color:var(--slate-soft);letter-spacing:.02em}
+
+  /* Live tracking card */
+  .track{
+    position:relative;
+    background:linear-gradient(180deg,rgba(10,30,46,.86),rgba(8,24,38,.78));
+    border:1px solid rgba(255,255,255,.16);
+    border-radius:var(--radius-lg);
+    padding:24px;
+    box-shadow:0 40px 80px -34px rgba(0,0,0,.7);
+    backdrop-filter:blur(10px);
+  }
+  .track-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+  .track-top .tt{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--slate-soft);font-weight:600}
+  .live{display:inline-flex;align-items:center;gap:7px;font-size:.76rem;font-weight:600;color:var(--teal-soft);
+    background:rgba(18,183,160,.14);border:1px solid rgba(18,183,160,.35);padding:5px 11px;border-radius:100px}
+  .live .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 0 rgba(18,183,160,.7);animation:pulse 1.9s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(18,183,160,.6)}70%{box-shadow:0 0 0 9px rgba(18,183,160,0)}100%{box-shadow:0 0 0 0 rgba(18,183,160,0)}}
+  .track-id{font-family:'Sora';font-weight:600;font-size:1.02rem;color:#fff;margin-bottom:2px}
+  .track-route{font-size:.82rem;color:var(--slate-soft);margin-bottom:20px}
+  .gauge{
+    background:rgba(3,17,28,.6);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:16px 16px 18px;margin-bottom:18px;
+  }
+  .gauge-row{display:flex;align-items:flex-end;justify-content:space-between}
+  .gauge-temp{font-family:'Sora';font-weight:700;font-size:2.1rem;color:#fff;line-height:1}
+  .gauge-temp sup{font-size:1rem;color:var(--teal-soft);vertical-align:super;margin-left:2px}
+  .gauge-meta{text-align:right;font-size:.76rem;color:var(--slate-soft);line-height:1.5}
+  .gauge-meta b{color:#fff}
+  .band{position:relative;height:9px;border-radius:6px;margin-top:16px;background:linear-gradient(90deg,#2CC7E0,#12B7A0 40%,#12B7A0 70%,#FFB020)}
+  .band .ok{position:absolute;top:-3px;bottom:-3px;left:24%;right:26%;border:1.5px dashed rgba(255,255,255,.6);border-radius:6px}
+  .band .pin{position:absolute;top:-6px;width:3px;height:21px;border-radius:3px;background:#fff;box-shadow:0 0 12px rgba(255,255,255,.9);left:46%}
+  .band-labels{display:flex;justify-content:space-between;font-size:.68rem;color:var(--slate-soft);margin-top:9px;letter-spacing:.03em}
+  .steps{margin-top:4px}
+  .step{display:flex;gap:13px;align-items:flex-start;padding:9px 0;position:relative}
+  .step .node{width:22px;height:22px;border-radius:50%;flex:none;border:1.5px solid rgba(255,255,255,.35);display:grid;place-items:center;font-size:.62rem;color:#fff;margin-top:2px;z-index:1}
+  .step.done .node{background:var(--teal);border-color:var(--teal);color:#04222a}
+  .step.active .node{border-color:var(--teal);color:var(--teal-soft)}
+  .step .txt b{display:block;font-size:.88rem;color:#fff;font-weight:600}
+  .step .txt span{font-size:.75rem;color:var(--slate-soft)}
+  .step::before{content:"";position:absolute;left:10.5px;top:20px;bottom:-6px;width:1.5px;background:rgba(255,255,255,.14)}
+  .step:last-child::before{display:none}
+  .track-foot{margin-top:14px;font-size:.72rem;color:var(--slate-soft);border-top:1px solid rgba(255,255,255,.1);padding-top:12px}
+
+  /* ---------- Trust bar ---------- */
+  .trust{background:var(--navy-900);color:#fff;padding:34px 0}
+  .trust .wrap{display:flex;align-items:center;gap:40px;flex-wrap:wrap;justify-content:space-between}
+  .trust-label{font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:var(--slate-soft);font-weight:600;flex:none}
+  .trust-items{display:flex;gap:38px;flex-wrap:wrap}
+  .trust-items div{display:flex;align-items:center;gap:10px;font-size:.92rem;font-weight:600;color:rgba(255,255,255,.88)}
+  .trust-items div svg{width:18px;height:18px;color:var(--teal)}
+
+  /* ---------- Clinical trust ---------- */
+  .clinica{background:#fff}
+  .clinica .wrap{display:grid;grid-template-columns:1.02fr .98fr;gap:56px;align-items:center}
+  .clinica h2{font-size:clamp(1.8rem,3.2vw,2.5rem);margin:18px 0 16px}
+  .clinica p{color:var(--slate);margin-bottom:26px}
+  .clinica .clin-list{display:grid;gap:16px}
+  .clinica .clin-list div{display:flex;gap:13px;align-items:flex-start;font-size:.93rem;color:var(--ink)}
+  .clinica .clin-list svg{width:20px;height:20px;color:var(--teal);flex:none;margin-top:3px}
+  .photo{position:relative;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-md);
+    aspect-ratio:5/4;background:linear-gradient(160deg,var(--navy-800),var(--navy-600))}
+  .photo img{width:100%;height:100%;object-fit:cover;display:block}
+  .photo .badge{position:absolute;left:18px;bottom:18px;right:18px;background:rgba(6,24,38,.82);backdrop-filter:blur(9px);
+    border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:14px 18px;color:#fff;display:flex;gap:13px;align-items:center}
+  .photo .badge svg{width:26px;height:26px;color:var(--teal-soft);flex:none}
+  .photo .badge b{display:block;font-family:'Sora';font-size:.95rem}
+  .photo .badge span{font-size:.75rem;color:var(--slate-soft)}
+
+  /* ---------- Cards / grid ---------- */
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:26px}
+  .card{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+    padding:30px;transition:.3s ease;height:100%;
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:#CFE0E9}
+  .card .ico{
+    width:46px;height:46px;border-radius:12px;display:grid;place-items:center;margin-bottom:20px;
+    background:linear-gradient(140deg,rgba(18,183,160,.14),rgba(44,199,224,.14));color:var(--navy-700);
+  }
+  .card .ico svg{width:23px;height:23px}
+  .card h3{font-size:1.13rem;margin-bottom:10px}
+  .card p{color:var(--slate);font-size:.94rem}
+  .card ul{list-style:none;margin-top:16px;display:grid;gap:9px}
+  .card ul li{font-size:.88rem;color:var(--slate);display:flex;gap:9px;align-items:flex-start}
+  .card ul li svg{width:15px;height:15px;color:var(--teal);flex:none;margin-top:4px}
+
+  /* ---------- Cold chain feature ---------- */
+  .cold{background:linear-gradient(180deg,#fff,#EFF5F8)}
+  .cold .wrap{display:grid;grid-template-columns:.95fr 1.05fr;gap:60px;align-items:center}
+  .cold h2{font-size:clamp(1.8rem,3.2vw,2.5rem);margin:18px 0 16px}
+  .cold p{color:var(--slate);margin-bottom:26px}
+  .cold-list{display:grid;gap:18px}
+  .cold-item{display:flex;gap:16px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+  .cold-item .k{font-family:'Sora';font-weight:700;font-size:1.02rem;color:var(--navy-700);flex:none;min-width:64px}
+  .cold-item .v b{display:block;font-weight:600;font-size:.95rem;color:var(--ink)}
+  .cold-item .v span{font-size:.85rem;color:var(--slate)}
+
+  .panel{
+    background:linear-gradient(160deg,var(--navy-800),var(--navy-900));
+    border-radius:var(--radius-lg);padding:34px;color:#fff;position:relative;overflow:hidden;
+    box-shadow:var(--shadow-md);
+  }
+  .panel::before{content:"";position:absolute;width:320px;height:320px;border-radius:50%;top:-140px;right:-120px;
+    background:radial-gradient(circle,rgba(44,199,224,.24),transparent 68%)}
+  .panel h4{color:#fff;font-size:1.05rem;margin-bottom:22px;position:relative}
+  .panel .meters{display:grid;gap:18px;position:relative}
+  .meter .ml{display:flex;justify-content:space-between;font-size:.82rem;color:rgba(226,240,247,.8);margin-bottom:8px}
+  .meter .ml b{color:#fff}
+  .meter .bar{height:7px;border-radius:6px;background:rgba(255,255,255,.12);overflow:hidden}
+  .meter .bar i{display:block;height:100%;width:0;border-radius:6px;background:linear-gradient(90deg,var(--teal),var(--cyan));transition:width 1.3s cubic-bezier(.2,.7,.2,1)}
+  .panel .foot{margin-top:24px;padding-top:18px;border-top:1px solid rgba(255,255,255,.12);font-size:.8rem;color:var(--slate-soft);position:relative}
+
+  /* ---------- Process ---------- */
+  .process{background:var(--navy-900);color:#fff}
+  .process .section-head h2{color:#fff}
+  .process .section-head p{color:rgba(226,240,247,.72)}
+  .process .eyebrow{color:var(--teal-soft)}
+  .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;counter-reset:step}
+  .flow .fstep{position:relative;padding-top:26px}
+  .flow .fstep::before{content:"";position:absolute;top:9px;left:0;right:0;height:1.5px;background:rgba(255,255,255,.15)}
+  .flow .fstep::after{content:counter(step);counter-increment:step;position:absolute;top:0;left:0;width:34px;height:34px;border-radius:50%;
+    background:linear-gradient(140deg,var(--teal),var(--cyan));color:#04222a;font-family:'Sora';font-weight:700;font-size:.95rem;
+    display:grid;place-items:center;box-shadow:0 10px 22px -10px rgba(18,183,160,.9)}
+  .flow .fstep h3{color:#fff;font-size:1rem;margin:14px 0 8px}
+  .flow .fstep p{font-size:.85rem;color:rgba(226,240,247,.7)}
+
+  /* ---------- Segments ---------- */
+  .seg .grid-3{gap:18px}
+  .seg .card{background:#fff}
+  .seg .card h3{font-size:1rem}
+  .seg .card p{font-size:.88rem}
+
+  /* ---------- Catálogo ---------- */
+  .catalog{background:#fff}
+  .filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:34px}
+  .filter{background:var(--bg);border:1px solid var(--line);color:var(--slate);font-weight:600;font-size:.85rem;
+    padding:9px 18px;border-radius:100px;cursor:pointer;transition:.2s ease;font-family:inherit}
+  .filter:hover{border-color:var(--navy-600);color:var(--navy-700)}
+  .filter.active{background:var(--navy-800);border-color:var(--navy-800);color:#fff}
+  .cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .cat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:24px;transition:.28s ease;display:flex;flex-direction:column}
+  .cat:hover{box-shadow:var(--shadow-md);border-color:#CFE0E9;transform:translateY(-4px)}
+  .cat .row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:15px}
+  .cat .ci{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(140deg,rgba(18,183,160,.15),rgba(44,199,224,.15));color:var(--navy-700)}
+  .cat .ci svg{width:20px;height:20px}
+  .cat .tk{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--navy-600);background:var(--bg);border:1px solid var(--line);padding:4px 10px;border-radius:100px;white-space:nowrap}
+  .cat h3{font-size:1.02rem;margin-bottom:8px}
+  .cat p{font-size:.86rem;color:var(--slate);flex:1}
+  .cat .meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+  .cat .meta span{font-size:.73rem;color:var(--slate);display:inline-flex;align-items:center;gap:6px}
+  .cat .meta span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--teal)}
+  .cat.hide{display:none}
+  .catalog .form-note{margin-top:26px;font-size:.8rem;color:var(--slate-soft)}
+
+  /* ---------- Regiões ---------- */
+  .regions{background:var(--navy-900);color:#fff}
+  .regions .section-head h2{color:#fff}
+  .regions .section-head p{color:rgba(226,240,247,.72)}
+  .regions .eyebrow{color:var(--teal-soft)}
+  .reg-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .region{background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.13);
+    border-radius:16px;padding:24px;transition:.28s ease}
+  .region:hover{transform:translateY(-4px);border-color:rgba(44,199,224,.5)}
+  .region .gl{display:grid;place-items:center;width:46px;height:46px;border-radius:12px;margin-bottom:16px;
+    background:rgba(18,183,160,.14);border:1px solid rgba(18,183,160,.3)}
+  .region .gl svg{width:24px;height:24px;color:var(--teal-soft)}
+  .region h3{color:#fff;font-size:1.05rem;margin-bottom:12px}
+  .region .countries{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}
+  .region .countries span{font-size:.73rem;color:rgba(226,240,247,.85);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);padding:4px 10px;border-radius:100px}
+  .region .hub{font-size:.78rem;color:var(--slate-soft);border-top:1px solid rgba(255,255,255,.1);padding-top:13px}
+  .region .hub b{color:var(--teal-soft)}
+  .reg-note{margin-top:26px;font-size:.82rem;color:var(--slate-soft);border-left:2px solid var(--teal);padding-left:16px}
+
+  /* ---------- Cadastro ---------- */
+  .signup{background:var(--bg)}
+  .signup .wrap{display:grid;grid-template-columns:.85fr 1.15fr;gap:56px;align-items:start}
+  .signup .benefits{display:grid;gap:15px;margin-top:26px}
+  .signup .benefits div{display:flex;gap:12px;align-items:flex-start;font-size:.92rem;color:var(--slate)}
+  .signup .benefits svg{width:19px;height:19px;color:var(--teal);flex:none;margin-top:3px}
+  form.cadastro{background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);padding:34px;box-shadow:var(--shadow-sm)}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .field{display:flex;flex-direction:column;gap:7px}
+  .field.full{grid-column:1/-1}
+  .field label{font-size:.82rem;font-weight:600;color:var(--navy-800)}
+  .field label span{color:#d9534f}
+  .field input,.field select,.field textarea{font-family:inherit;font-size:.9rem;color:var(--ink);background:var(--bg);
+    border:1px solid var(--line);border-radius:10px;padding:12px 14px;transition:.2s ease;width:100%}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--teal);background:#fff;box-shadow:0 0 0 3px rgba(18,183,160,.16)}
+  .field textarea{resize:vertical;min-height:98px}
+  .form-note{font-size:.78rem;color:var(--slate-soft);margin-top:16px;line-height:1.5}
+  form.cadastro .btn{width:100%;justify-content:center;margin-top:22px}
+  .form-success{display:none;text-align:center;padding:34px 20px;background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg)}
+  .form-success.show{display:block}
+  .form-success .ok{width:58px;height:58px;border-radius:50%;background:linear-gradient(140deg,var(--teal),var(--cyan));display:grid;place-items:center;margin:0 auto 18px;color:#04222a}
+  .form-success .ok svg{width:30px;height:30px}
+  .form-success h3{margin-bottom:10px}
+  .form-success p{color:var(--slate);font-size:.92rem;max-width:420px;margin:0 auto}
+
+  /* ---------- Floating signup shortcut ---------- */
+  .fab{position:fixed;right:22px;bottom:22px;z-index:70;display:inline-flex;align-items:center;gap:9px;
+    background:linear-gradient(100deg,var(--teal),var(--cyan));color:#04222a;font-weight:700;font-size:.9rem;
+    padding:14px 20px;border-radius:100px;box-shadow:0 16px 32px -12px rgba(18,183,160,.9);transition:.25s ease}
+  .fab:hover{transform:translateY(-3px)}
+  .fab svg{width:18px;height:18px}
+
+  /* ---------- CTA ---------- */
+  .cta-band{padding:0 0 104px}
+  .cta-inner{
+    background:
+      linear-gradient(120deg,rgba(10,42,67,.95),rgba(21,80,125,.92)),
+      url('https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+    border-radius:26px;padding:64px;color:#fff;position:relative;overflow:hidden;
+    display:grid;grid-template-columns:1.3fr .7fr;gap:40px;align-items:center;
+  }
+  .cta-inner::before{content:"";position:absolute;width:420px;height:420px;border-radius:50%;right:-150px;bottom:-190px;
+    background:radial-gradient(circle,rgba(44,199,224,.3),transparent 66%)}
+  .cta-inner h2{color:#fff;font-size:clamp(1.7rem,3vw,2.3rem);margin-bottom:14px;position:relative}
+  .cta-inner p{color:rgba(226,240,247,.88);position:relative;max-width:520px}
+  .cta-actions{display:flex;flex-direction:column;gap:14px;position:relative}
+  .cta-actions .btn{justify-content:center}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--navy-900);color:rgba(226,240,247,.72);padding:64px 0 34px;font-size:.9rem}
+  .f-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.2fr;gap:40px;padding-bottom:44px;border-bottom:1px solid rgba(255,255,255,.1)}
+  .f-grid h4{color:#fff;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:18px;font-weight:600}
+  .f-grid a{display:block;margin-bottom:11px;transition:.2s}
+  .f-grid a:hover{color:#fff}
+  .f-brand .brand{margin-bottom:16px}
+  .f-brand p{max-width:280px;font-size:.88rem}
+  .f-contact div{display:flex;gap:10px;margin-bottom:13px;align-items:flex-start}
+  .f-contact svg{width:16px;height:16px;color:var(--teal);flex:none;margin-top:3px}
+  .f-bottom{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:26px;font-size:.82rem;color:var(--slate-soft)}
+
+  /* ---------- Reveal ---------- */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:1000px){
+    .hero .wrap{grid-template-columns:1fr;gap:48px}
+    .hero p.lead{max-width:none}
+    .cold .wrap,.quality .wrap{grid-template-columns:1fr;gap:44px}
+    .clinica .wrap{grid-template-columns:1fr;gap:40px}
+    .signup .wrap{grid-template-columns:1fr;gap:40px}
+    .cat-grid{grid-template-columns:1fr 1fr}
+    .reg-grid{grid-template-columns:1fr 1fr}
+    .cta-inner{grid-template-columns:1fr;padding:48px}
+    .grid-3{grid-template-columns:1fr 1fr}
+    .flow{grid-template-columns:1fr 1fr;gap:28px 22px}
+    nav.links,.nav-cta .btn{display:none}
+    .burger{display:block}
+    nav.links.open{display:flex;position:absolute;top:74px;left:20px;right:20px;flex-direction:column;gap:0;
+      background:var(--navy-800);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:12px;box-shadow:var(--shadow-md)}
+    nav.links.open a{padding:14px 14px;border-bottom:1px solid rgba(255,255,255,.07);font-size:.98rem}
+    nav.links.open a:last-child{border-bottom:0}
+  }
+  @media (max-width:660px){
+    .section{padding:76px 0}
+    .hero{padding:130px 0 84px}
+    .cat-grid,.reg-grid{grid-template-columns:1fr}
+    .form-grid{grid-template-columns:1fr}
+    .grid-3,.grid-2{grid-template-columns:1fr}
+    .flow{grid-template-columns:1fr;gap:22px}
+    .flow .fstep::before{display:none}
+    .f-grid{grid-template-columns:1fr 1fr}
+    .f-brand{grid-column:1/-1}
+    .trust .wrap{flex-direction:column;align-items:flex-start;gap:22px}
+    .trust-items{gap:20px}
+    .hero-stats{gap:26px}
+    .fab span{display:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header id="header">
+  <div class="wrap nav">
+    <a href="#top" class="brand" aria-label="MedFlux">
+      <span class="mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#04222a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3v18M3 12h18"/>
+        </svg>
+      </span>
+      <span>MedFlux<small>Logística Farmacêutica</small></span>
+    </a>
+    <nav class="links" id="navlinks">
+      <a href="#solucoes">Soluções</a>
+      <a href="#clinica">Cuidado clínico</a>
+      <a href="#catalogo">Catálogo</a>
+      <a href="#regioes">Regiões</a>
+      <a href="#processo">Processo</a>
+      <a href="#cadastro">Cadastro</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#cadastro" class="btn btn-primary">
+        Cadastrar cliente
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+      </a>
+      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-copy">
+      <span class="eyebrow">Importação & logística de medicamentos</span>
+      <h1>Do porto ao paciente, com a <span class="grad">integridade térmica</span> que o medicamento exige.</h1>
+      <p class="lead">
+        A MedFlux opera importação por encomenda, armazenagem refrigerada e transporte validado de produtos
+        farmacêuticos e biológicos. Cada lote viaja com temperatura monitorada, rastreabilidade ponto a ponto e
+        documentação regulatória em ordem.
+      </p>
+      <div class="hero-cta">
+        <a href="#cadastro" class="btn btn-primary">
+          Cadastrar minha empresa
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#catalogo" class="btn btn-ghost">Ver catálogo</a>
+      </div>
+      <div class="hero-stats">
+        <div class="st"><b>2–8 °C</b><span>e 15–25 °C controlados</span></div>
+        <div class="st"><b>24/7</b><span>monitoramento com alarme</span></div>
+        <div class="st"><b>RDC 430/2020</b><span>Boas Práticas de Distribuição</span></div>
+      </div>
+    </div>
+
+    <!-- Live tracking card -->
+    <div class="track" aria-label="Painel de rastreamento de lote">
+      <div class="track-top">
+        <span class="tt">Rastreamento em tempo real</span>
+        <span class="live"><span class="dot"></span>Ao vivo</span>
+      </div>
+      <div class="track-id">Lote #MF-2041 · Carga ativa</div>
+      <div class="track-route">Frankfurt (FRA) → Guarulhos (GRU) · Carreta refrigerada classe A</div>
+
+      <div class="gauge">
+        <div class="gauge-row">
+          <div class="gauge-temp">4,2<sup>°C</sup></div>
+          <div class="gauge-meta">Faixa do lote<br><b>2–8 °C</b> · dentro do limite</div>
+        </div>
+        <div class="band">
+          <span class="ok"></span>
+          <span class="pin"></span>
+        </div>
+        <div class="band-labels"><span>0 °C</span><span>2–8 °C</span><span>+25 °C</span></div>
+      </div>
+
+      <div class="steps">
+        <div class="step done"><span class="node">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        </span><span class="txt"><b>Origem qualificada</b><span>Validação térmica do embarque · Frankfurt</span></span></div>
+        <div class="step done"><span class="node">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        </span><span class="txt"><b>Desembaraço aduaneiro</b><span>Documentação Anvisa liberada · GRU</span></span></div>
+        <div class="step active"><span class="node">3</span><span class="txt"><b>Centro de distribuição refrigerado</b><span>Em rota · chegada prevista hoje, 18h40</span></span></div>
+        <div class="step"><span class="node">4</span><span class="txt"><b>Entrega validada</b><span>Aguardando confirmação no destino</span></span></div>
+      </div>
+      <div class="track-foot">Última leitura há 2 min · sensor S-03 · desvio acumulado 0,0 °C</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TRUST BAR ================= -->
+<section class="trust">
+  <div class="wrap">
+    <span class="trust-label">Operamos em conformidade com</span>
+    <div class="trust-items">
+      <div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>
+        Anvisa
+      </div>
+      <div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 6v6c0 5 3.8 8.5 9 10 5.2-1.5 9-5 9-10V6Z"/></svg>
+        GDP · Boas Práticas
+      </div>
+      <div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M2 12h20M12 3c2.5 2.5 3.8 5.7 3.8 9S14.5 18.5 12 21c-2.5-2.5-3.8-5.7-3.8-9S9.5 5.5 12 3Z"/></svg>
+        IATA CEIV Pharma
+      </div>
+      <div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.4 14.5 16 10l-1.8 1.8M22 8.5 15.5 2"/><path d="M2 20h6a2 2 0 0 0 0-4H6a2 2 0 0 1 0-4h8l4 4"/></svg>
+      MAPA
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONFIANÇA CLÍNICA ================= -->
+<section class="section clinica" id="clinica">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">Cuidado clínico</span>
+      <h2>Por trás de cada embarque, uma equipe que entende de saúde.</h2>
+      <p>Nossa operação é desenhada com profissionais que conhecem a rotina de farmácia hospitalar, central de
+        abastecimento e pesquisa clínica. Isso aparece na forma como tratamos prazos, temperatura e documentação.</p>
+      <div class="clin-list">
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Atendimento técnico consultivo, não apenas comercial</div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Apoio na interpretação de requisitos sanitários e de registro</div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Planejamento de janelas de entrega conforme a rotina do cliente</div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Suporte em desvios com plano de ação e comunicação ativa</div>
+      </div>
+    </div>
+
+    <div class="photo">
+      <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=1200&q=80"
+           alt="Profissionais de saúde sorrindo, com prancheta e jaleco" loading="lazy" />
+      <div class="badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="9"/></svg>
+        <span><b>Equipe multidisciplinar</b><span>Farmacêuticos, regulatório e logística integrados</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SOLUÇÕES ================= -->
+<section class="section" id="solucoes">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Soluções</span>
+      <h2>Uma operação completa para medicamentos que <span class="grad">não podem falhar</span>.</h2>
+      <p>Da negociação no exterior à última milha hospitalar: cuidamos de cada etapa crítica da cadeia
+        farmacêutica, com processos escritos, rastreáveis e auditáveis.</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="9"/></svg></div>
+        <h3>Importação por encomenda</h3>
+        <p>Compramos, trazemos e nacionalizamos medicamentos de uso restrito e de alta complexidade, com controle cambial e logística internacional integrados.</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Análise de registro e de licença de importação</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Consolidação de cargas e escolta documental</li>
+        </ul>
+      </div>
+
+      <div class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h18v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Z"/><path d="M3 9l2-5h14l2 5M8 13v4M12 13v4M16 13v4"/></svg></div>
+        <h3>Desembaraço aduaneiro</h3>
+        <p>Despacho em portos e aeroportos com equipe especializada em produtos sujeitos a controle sanitário e regimes especiais de importação.</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Parecer e anuência sanitária</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Dupla checagem fiscal e tributária</li>
+        </ul>
+      </div>
+
+      <div class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></svg></div>
+        <h3>Armazenagem refrigerada</h3>
+        <p>Centros de distribuição com câmaras climatizadas, áreas segregadas e controle de acesso para produtos termolábeis e de alto valor.</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Faixas de 2–8 °C, 15–25 °C e congelados</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Capacidade de emergência e grupo gerador</li>
+        </ul>
+      </div>
+
+      <div class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M1 3h15v13H1zM16 8h3l4 4v4h-7z"/><circle cx="5.5" cy="18.5" r="2"/><circle cx="18.5" cy="18.5" r="2"/></svg></div>
+        <h3>Transporte validado</h3>
+        <p>Frota refrigerada qualificada com mapeamento térmico de rotas, planos de contingência e registro contínuo de temperatura por viagem.</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Mapeamento térmico por veículo e rota</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Registro contínuo e laudo por lote</li>
+        </ul>
+      </div>
+
+      <div class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <h3>Rastreabilidade & dados</h3>
+        <p>Sensores IoT em cada embarque, alarmes automáticos e histórico completo de temperatura acessível por lote e por cliente.</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Leitura em tempo real e alerta de desvio</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Relatórios auditáveis por período</li>
+        </ul>
+      </div>
+
+      <div class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V9l9-6 9 6v12"/><path d="M9 21v-6h6v6"/></svg></div>
+        <h3>Última milha hospitalar</h3>
+        <p>Entrega em hospitais, clínicas e centros de pesquisa com agenda controlada, cadeia de custódia e confirmação de recebimento.</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Janelas de entrega e prioridade crítica</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Cadeia de custódia documentada</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CADEIA FRIA ================= -->
+<section class="section cold" id="cadeia-fria">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">Cadeia fria</span>
+      <h2>Controle térmico tratado como <span class="grad">processo crítico</span>, não como detalhe.</h2>
+      <p>Um medicamento termolábil perde valor terapêutico a cada grau fora da faixa. Por isso tratamos temperatura,
+        umidade e tempo como parâmetros controlados e documentados do início ao fim da viagem.</p>
+      <div class="cold-list">
+        <div class="cold-item">
+          <span class="k">2–8 °C</span>
+          <span class="v"><b>Refrigerados</b><span>Vacinas, biológicos, insulinas e hemoderivados.</span></span>
+        </div>
+        <div class="cold-item">
+          <span class="k">15–25 °C</span>
+          <span class="v"><b>Temperatura ambiente controlada</b><span>Comprimidos, cápsulas e soluções estáveis.</span></span>
+        </div>
+        <div class="cold-item">
+          <span class="k">≤ -20 °C</span>
+          <span class="v"><b>Congelados</b><span>Produtos de terapia avançada e insumos de pesquisa.</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="panel">
+      <h4>Painel de qualidade · indicadores operacionais</h4>
+      <div class="meters">
+        <div class="meter">
+          <div class="ml"><span>Conformidade térmica dos embarques</span><b>99,6%</b></div>
+          <div class="bar"><i data-w="99.6"></i></div>
+        </div>
+        <div class="meter">
+          <div class="ml"><span>Entregas dentro da janela acordada</span><b>98,4%</b></div>
+          <div class="bar"><i data-w="98.4"></i></div>
+        </div>
+        <div class="meter">
+          <div class="ml"><span>Desvios tratados com CAPA em 24h</span><b>100%</b></div>
+          <div class="bar"><i data-w="100"></i></div>
+        </div>
+        <div class="meter">
+          <div class="ml"><span>Rastreabilidade com laudo por lote</span><b>100%</b></div>
+          <div class="bar"><i data-w="100"></i></div>
+        </div>
+      </div>
+      <div class="foot">Indicadores internos monitorados mensalmente no Sistema de Gestão da Qualidade. Valores ilustrativos de operação.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CATÁLOGO DE MEDICAMENTOS ================= -->
+<section class="section catalog" id="catalogo">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Catálogo de medicamentos</span>
+      <h2>Categorias que importamos com acondicionamento e registro controlados.</h2>
+      <p>Trabalhamos com classes terapêuticas que exigem faixa térmica específica, segregação e documentação
+        sanitária. Filtre por temperatura para ver o que se aplica à sua demanda.</p>
+    </div>
+
+    <div class="filters" role="group" aria-label="Filtrar catálogo por temperatura">
+      <button class="filter active" data-filter="all">Todas as categorias</button>
+      <button class="filter" data-filter="refrigerado">Refrigerados · 2–8 °C</button>
+      <button class="filter" data-filter="congelado">Congelados · ≤ -20 °C</button>
+      <button class="filter" data-filter="ambiente">Ambiente · 15–25 °C</button>
+      <button class="filter" data-filter="bioterapia">Bioterapias</button>
+    </div>
+
+    <div class="cat-grid">
+      <div class="cat reveal" data-cat="refrigerado ambiente">
+        <div class="row">
+          <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 20.5 3.5 13.5a5 5 0 0 1 7-7l7 7a5 5 0 0 1-7 7Z"/><path d="m8.5 8.5 7 7"/></svg></span>
+          <span class="tk">Uso restrito</span>
+        </div>
+        <h3>Oncológicos</h3>
+        <p>Quimioterápicos, terapias orais de alto custo e medicamentos de dispensação restrita, com segregação e controle de acesso.</p>
+        <div class="meta"><span>2–8 °C e 15–25 °C</span><span>Importação por encomenda</span></div>
+      </div>
+
+      <div class="cat reveal" data-cat="refrigerado">
+        <div class="row">
+          <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4A2 2 0 0 0 19 18l-5-9V3"/></svg></span>
+          <span class="tk">Cadeia fria</span>
+        </div>
+        <h3>Imunobiológicos</h3>
+        <p>Anticorpos monoclonais e proteínas recombinantes sensíveis a variação térmica, com registro de temperatura por lote.</p>
+        <div class="meta"><span>2–8 °C</span><span>Origem Europa · Ásia</span></div>
+      </div>
+
+      <div class="cat reveal" data-cat="refrigerado congelado">
+        <div class="row">
+          <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m18 2 4 4M17 5l-9.5 9.5a2 2 0 0 0-.5.9L6 20l-2-1 1-1 1 1M15 7l-8 8M9 3l6 6"/></svg></span>
+          <span class="tk">Imunizantes</span>
+        </div>
+        <h3>Vacinas</h3>
+        <p>Imunizantes que exigem faixa de 2–8 °C ou congelamento controlado, com plano de contingência para interrupção de energia.</p>
+        <div class="meta"><span>2–8 °C e ≤ -20 °C</span><span>Lotes com laudo térmico</span></div>
+      </div>
+
+      <div class="cat reveal" data-cat="refrigerado">
+        <div class="row">
+          <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5S5.5 9 5.5 14a6.5 6.5 0 0 0 13 0C18.5 9 12 2.5 12 2.5Z"/></svg></span>
+          <span class="tk">Cadeia fria</span>
+        </div>
+        <h3>Hormônios e análogos</h3>
+        <p>Insulinas e análogos de ação prolongada que demandam cadeia fria ininterrupta da origem até a entrega final.</p>
+        <div class="meta"><span>2–8 °C</span><span>Alto giro</span></div>
+      </div>
+
+      <div class="cat reveal" data-cat="refrigerado">
+        <div class="row">
+          <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="M12 8v8M8 12h8"/></svg></span>
+          <span class="tk">Hemoderivados</span>
+        </div>
+        <h3>Hemoderivados e anticoagulantes</h3>
+        <p>Fatores de coagulação e derivados plasmáticos com rastreabilidade total e controle reforçado de custódia.</p>
+        <div class="meta"><span>2–8 °C</span><span>Cadeia de custódia</span></div>
+      </div>
+
+      <div class="cat reveal" data-cat="congelado bioterapia">
+        <div class="row">
+          <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4c0 8 16 8 16 16M20 4c0 8-16 8-16 16"/><path d="M8 8h.01M16 16h.01M8 16h.01M16 8h.01"/></svg></span>
+          <span class="tk">Alta complexidade</span>
+        </div>
+        <h3>Terapias avançadas</h3>
+        <p>Produtos de terapia celular e gênica em faixas ultrabaixas de temperatura, com descarte controlado e logística dedicada.</p>
+        <div class="meta"><span>≤ -20 °C / -70 °C</span><span>Manuseio especializado</span></div>
+      </div>
+
+      <div class="cat reveal" data-cat="refrigerado ambiente bioterapia">
+        <div class="row">
+          <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9Z"/></svg></span>
+          <span class="tk">Doenças raras</span>
+        </div>
+        <h3>Medicamentos para doenças raras</h3>
+        <p>Terapias específicas de baixo volume e alto valor agregado, com importação por encomenda e prazos monitorados.</p>
+        <div class="meta"><span>2–8 °C e 15–25 °C</span><span>Por encomenda</span></div>
+      </div>
+
+      <div class="cat reveal" data-cat="ambiente refrigerado">
+        <div class="row">
+          <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8 12 3 3 8v8l9 5 9-5V8Z"/><path d="m3 8 9 5 9-5M12 13v8"/></svg></span>
+          <span class="tk">Insumos</span>
+        </div>
+        <h3>Insumos e princípios ativos (APIs)</h3>
+        <p>Matérias-primas e insumos farmacêuticos para produção, com documentação de origem e laudos do fabricante.</p>
+        <div class="meta"><span>Conforme especificação</span><span>Volumes industriais</span></div>
+      </div>
+
+      <div class="cat reveal" data-cat="ambiente refrigerado">
+        <div class="row">
+          <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V9l9-6 9 6v12"/><path d="M9 21v-6h6v6"/></svg></span>
+          <span class="tk">Dispensação restrita</span>
+        </div>
+        <h3>Medicamentos hospitalares</h3>
+        <p>Itens de uso hospitalar e de dispensação restrita, com entrega em janelas definidas e confirmação de recebimento.</p>
+        <div class="meta"><span>15–25 °C · 2–8 °C</span><span>Última milha hospitalar</span></div>
+      </div>
+    </div>
+
+    <p class="form-note">Catálogo de referência por classe terapêutica. A disponibilidade depende de registro sanitário, licença de importação e do fabricante de origem.</p>
+  </div>
+</section>
+
+<!-- ================= REGIÕES DE IMPORTAÇÃO ================= -->
+<section class="section regions" id="regioes">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Regiões de importação</span>
+      <h2>Origem nos principais polos farmacêuticos do mundo.</h2>
+      <p>Negociamos e embarcamos em mercados com fabricação qualificada, com corredores logísticos definidos e
+        desembaraço em cada ponto de entrada no Brasil.</p>
+    </div>
+
+    <div class="reg-grid">
+      <div class="region reveal">
+        <span class="gl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
+        <h3>Europa</h3>
+        <div class="countries"><span>Alemanha</span><span>Suíça</span><span>Reino Unido</span><span>Irlanda</span><span>França</span><span>Itália</span></div>
+        <div class="hub">Hubs: <b>Frankfurt (FRA)</b> · <b>Zurique (ZRH)</b></div>
+      </div>
+
+      <div class="region reveal">
+        <span class="gl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2c2.6 2.6 4 5.8 4 10s-1.4 7.4-4 10c-2.6-2.6-4-5.8-4-10s1.4-7.4 4-10Z"/></svg></span>
+        <h3>América do Norte</h3>
+        <div class="countries"><span>Estados Unidos</span><span>Canadá</span></div>
+        <div class="hub">Hubs: <b>Miami (MIA)</b> · <b>Nova York (JFK)</b></div>
+      </div>
+
+      <div class="region reveal">
+        <span class="gl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2c2.6 2.6 4 5.8 4 10s-1.4 7.4-4 10c-2.6-2.6-4-5.8-4-10s1.4-7.4 4-10Z"/></svg></span>
+        <h3>Ásia</h3>
+        <div class="countries"><span>Índia</span><span>China</span><span>Japão</span><span>Coreia do Sul</span></div>
+        <div class="hub">Hubs: <b>Mumbai (BOM)</b> · <b>Xangai (PVG)</b></div>
+      </div>
+
+      <div class="region reveal">
+        <span class="gl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
+        <h3>América Latina</h3>
+        <div class="countries"><span>Argentina</span><span>Colômbia</span><span>México</span><span>Chile</span></div>
+        <div class="hub">Hubs: <b>Buenos Aires (EZE)</b> · <b>Bogotá (BOG)</b></div>
+      </div>
+    </div>
+
+    <p class="reg-note">Trabalhamos também com origens sob consulta. As rotas e prazos variam conforme a faixa térmica,
+      o volume e as exigências regulatórias de cada produto.</p>
+  </div>
+</section>
+
+<!-- ================= PROCESSO ================= -->
+<section class="section process" id="processo">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Processo</span>
+      <h2>Cinco etapas auditáveis, do fornecedor estrangeiro até a entrega.</h2>
+      <p>Um fluxo definido evita improviso. Cada etapa tem responsável, registro e critério de aprovação antes de avançar.</p>
+    </div>
+
+    <div class="flow">
+      <div class="fstep reveal">
+        <h3>Origem & qualificação</h3>
+        <p>Avaliamos o fornecedor, o produto e a cadeia de origem, definindo requisitos de acondicionamento e transporte.</p>
+      </div>
+      <div class="fstep reveal">
+        <h3>Importação & documentação</h3>
+        <p>Conduzimos o processo de importação com licenças, registros e anuências sanitárias em ordem antes do embarque.</p>
+      </div>
+      <div class="fstep reveal">
+        <h3>Armazenagem controlada</h3>
+        <p>O lote entra em câmara qualificada, com temperatura registrada e quarentena quando o produto exige.</p>
+      </div>
+      <div class="fstep reveal">
+        <h3>Distribuição validada</h3>
+        <p>Transporte refrigerado com mapeamento térmico, sensores ativos e plano de contingência por rota.</p>
+      </div>
+      <div class="fstep reveal">
+        <h3>Entrega & confirmação</h3>
+        <p>Última milha com cadeia de custódia, confirmação de recebimento e arquivamento do laudo de temperatura.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SEGMENTOS ================= -->
+<section class="section seg" id="segmentos">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Para quem trabalhamos</span>
+      <h2>Atendemos quem responde pela saúde do paciente.</h2>
+      <p>Operações sob medida para organizações que precisam de previsibilidade, conformidade e rastreabilidade em produtos farmacêuticos.</p>
+    </div>
+    <div class="grid-3">
+      <div class="card reveal">
+        <h3>Laboratórios fabricantes</h3>
+        <p>Suporte à distribuição nacional e à importação de insumos e produtos acabados com padrão de qualidade exigente.</p>
+      </div>
+      <div class="card reveal">
+        <h3>Importadores e distribuidoras</h3>
+        <p>Parceria logística para quem já opera no setor e precisa escalar com segurança regulatória.</p>
+      </div>
+      <div class="card reveal">
+        <h3>Hospitais e redes de saúde</h3>
+        <p>Abastecimento de medicamentos de alto custo e termolábeis com janelas de entrega respeitadas.</p>
+      </div>
+      <div class="card reveal">
+        <h3>Pesquisa clínica</h3>
+        <p>Logística de produtos investigacionais com cadeia fria, segregação e controle de temperatura documentado.</p>
+      </div>
+      <div class="card reveal">
+        <h3>Compras públicas</h3>
+        <p>Atendimento a processos licitatórios e compras governamentais com prazos e documentação compatíveis.</p>
+      </div>
+      <div class="card reveal">
+        <h3>Terapias avançadas</h3>
+        <p>Manuseio de produtos biológicos, celulares e de faixas ultrabaixas de temperatura.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= QUALIDADE ================= -->
+<section class="section quality" id="qualidade">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">Qualidade & conformidade</span>
+      <h2>Um Sistema de Gestão da Qualidade que sustenta cada entrega.</h2>
+      <p>A conformidade não é um selo na parede: é um conjunto de rotinas que mantêm a integridade do produto e a
+        confiança do nosso cliente em cada operação.</p>
+      <div class="q-badges">
+        <span class="q-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>GDP aplicado à distribuição</span>
+        <span class="q-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>Equipamentos qualificados</span>
+        <span class="q-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h6"/></svg>Registros rastreáveis</span>
+      </div>
+    </div>
+
+    <div class="q-list">
+      <div class="q reveal">
+        <span class="n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 6v6c0 5 3.8 8.5 9 10 5.2-1.5 9-5 9-10V6Z"/></svg></span>
+        <span><b>Qualificação de instalações e veículos</b><span>Protocolos de IQ, OQ e PQ e revalidação periódica de câmaras e rotas.</span></span>
+      </div>
+      <div class="q reveal">
+        <span class="n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+        <span><b>Gestão de desvios e CAPA</b><span>Investigação de causa raiz, ações corretivas e verificação de eficácia documentadas.</span></span>
+      </div>
+      <div class="q reveal">
+        <span class="n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9"/></svg></span>
+        <span><b>Equipe treinada e habilitada</b><span>Capacitação contínua em boas práticas de distribuição e manuseio de termolábeis.</span></span>
+      </div>
+      <div class="q reveal">
+        <span class="n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg></span>
+        <span><b>Documentação e recall</b><span>Cadeia de custódia completa e plano de recolhimento pronto para ser acionado.</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CADASTRO DE CLIENTE ================= -->
+<section class="section signup" id="cadastro">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">Cadastro de cliente</span>
+      <h2>Cadastre sua empresa e receba atendimento dedicado.</h2>
+      <p>Empresas cadastradas têm atendimento técnico direto, consulta de disponibilidade no catálogo e
+        acompanhamento dos embarques em andamento.</p>
+      <div class="benefits">
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Cotação de importação com prazos e requisitos</div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Consulta de disponibilidade por categoria</div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Acesso aos laudos térmicos dos lotes</div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Relatórios de rastreabilidade por período</div>
+      </div>
+    </div>
+
+    <form class="cadastro" id="form-cadastro" novalidate>
+      <div class="form-grid">
+        <div class="field full">
+          <label for="razao">Razão social <span>*</span></label>
+          <input id="razao" name="razao" type="text" required placeholder="Nome da empresa" />
+        </div>
+        <div class="field">
+          <label for="cnpj">CNPJ <span>*</span></label>
+          <input id="cnpj" name="cnpj" type="text" required placeholder="00.000.000/0000-00" />
+        </div>
+        <div class="field">
+          <label for="resp">Responsável <span>*</span></label>
+          <input id="resp" name="resp" type="text" required placeholder="Nome do responsável" />
+        </div>
+        <div class="field">
+          <label for="email">E-mail corporativo <span>*</span></label>
+          <input id="email" name="email" type="email" required placeholder="nome@empresa.com.br" />
+        </div>
+        <div class="field">
+          <label for="tel">Telefone <span>*</span></label>
+          <input id="tel" name="tel" type="tel" required placeholder="(11) 0000-0000" />
+        </div>
+        <div class="field">
+          <label for="operacao">Tipo de operação</label>
+          <select id="operacao" name="operacao">
+            <option>Importação por encomenda</option>
+            <option>Armazenagem refrigerada</option>
+            <option>Distribuição e transporte</option>
+            <option>Mais de uma operação</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="origem">Região de origem de interesse</label>
+          <select id="origem" name="origem">
+            <option>Europa</option>
+            <option>América do Norte</option>
+            <option>Ásia</option>
+            <option>América Latina</option>
+            <option>Ainda não sei / preciso de orientação</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="msg">Produtos ou necessidades</label>
+          <textarea id="msg" name="msg" placeholder="Descreva as categorias, faixas de temperatura e volumes previstos."></textarea>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">
+        Enviar cadastro
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+      <p class="form-note">Ao enviar, você concorda em ser contatado pela equipe comercial da MedFlux. Seus dados são usados apenas para atendimento.</p>
+    </form>
+
+    <div class="form-success" id="form-success" role="status" aria-live="polite">
+      <span class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+      <h3>Cadastro enviado com sucesso</h3>
+      <p>Recebemos seus dados. A equipe comercial da MedFlux entrará em contato para dar continuidade ao atendimento.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="cta-band" id="contato">
+  <div class="wrap">
+    <div class="cta-inner reveal">
+      <div>
+        <span class="eyebrow" style="color:var(--teal-soft)">Fale com a MedFlux</span>
+        <h2>Vamos desenhar o fluxo do seu próximo lote.</h2>
+        <p>Conte o que precisa importar ou distribuir e a equipe técnica retorna com requisitos, prazos estimados e a
+          estrutura necessária para manter a integridade do produto de ponta a ponta.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="mailto:comercial@medflux.com.br" class="btn btn-primary">
+          Enviar e-mail comercial
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="m4 6 8 6 8-6"/></svg>
+        </a>
+        <a href="tel:+551140028922" class="btn btn-ghost">
+          Ligar: +55 11 4002-8922
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.8a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="f-grid">
+      <div class="f-brand">
+        <a href="#top" class="brand">
+          <span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#04222a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 12h18"/></svg></span>
+          <span style="color:#fff">MedFlux<small>Logística Farmacêutica</small></span>
+        </a>
+        <p>Importação, armazenagem refrigerada e distribuição validada de medicamentos e produtos biológicos com cadeia fria monitorada.</p>
+      </div>
+
+      <div>
+        <h4>Catálogo & regiões</h4>
+        <a href="#catalogo">Catálogo de medicamentos</a>
+        <a href="#regioes">Regiões de importação</a>
+        <a href="#cadeia-fria">Faixas de temperatura</a>
+        <a href="#cadastro">Cadastro de cliente</a>
+      </div>
+
+      <div>
+        <h4>Empresa</h4>
+        <a href="#clinica">Cuidado clínico</a>
+        <a href="#processo">Processo</a>
+        <a href="#qualidade">Qualidade</a>
+        <a href="#contato">Contato</a>
+      </div>
+
+      <div class="f-contact">
+        <h4>Contato</h4>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="m4 6 8 6 8-6"/></svg><span>comercial@medflux.com.br</span></div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.8a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg><span>+55 11 4002-8922</span></div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg><span>Rod. Hélio Smidt, s/n · Cumbica<br>Guarulhos · SP</span></div>
+      </div>
+    </div>
+
+    <div class="f-bottom">
+      <span>© <span id="year"></span> MedFlux Logística Farmacêutica. Todos os direitos reservados.</span>
+      <span>Operação sujeita à legislação sanitária vigente.</span>
+    </div>
+  </div>
+</footer>
+
+<a href="#cadastro" class="fab" aria-label="Cadastrar cliente">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+  <span>Cadastrar cliente</span>
+</a>
+
+<script>
+  // Ano dinâmico
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Header sólido ao rolar
+  const header = document.getElementById('header');
+  const onScroll = () => header.classList.toggle('solid', window.scrollY > 30);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive:true });
+
+  // Menu mobile
+  const burger = document.getElementById('burger');
+  const navlinks = document.getElementById('navlinks');
+  burger.addEventListener('click', () => navlinks.classList.toggle('open'));
+  navlinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navlinks.classList.remove('open')));
+
+  // Filtros do catálogo de medicamentos
+  const filters = document.querySelectorAll('.filter');
+  const cats = document.querySelectorAll('.cat');
+  filters.forEach(f => f.addEventListener('click', () => {
+    filters.forEach(x => x.classList.remove('active'));
+    f.classList.add('active');
+    const g = f.dataset.filter;
+    cats.forEach(c => {
+      const match = g === 'all' || c.dataset.cat.split(' ').includes(g);
+      c.classList.toggle('hide', !match);
+    });
+  }));
+
+  // Cadastro de cliente
+  const cadastro = document.getElementById('form-cadastro');
+  if (cadastro){
+    cadastro.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!cadastro.checkValidity()){ cadastro.reportValidity(); return; }
+      cadastro.style.display = 'none';
+      const ok = document.getElementById('form-success');
+      ok.classList.add('show');
+      ok.scrollIntoView({ behavior:'smooth', block:'center' });
+    });
+  }
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold:0.14, rootMargin:'0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transitionDelay = (i % 3) * 70 + 'ms';
+    io.observe(el);
+  });
+
+  // Barras do painel de qualidade
+  const panel = document.getElementById('panel');
+  if (panel){
+    const pb = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting){
+          panel.querySelectorAll('.bar i').forEach(bar => {
+            bar.style.width = bar.dataset.w + '%';
+          });
+          pb.unobserve(panel);
+        }
+      });
+    }, { threshold:0.4 });
+    pb.observe(panel);
+  }
+</script>
+</body>
+</html>
